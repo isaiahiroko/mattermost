@@ -1,0 +1,143 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: staging
+  name: mattermost-pv-claim
+  labels:
+    type: app
+    store: mattermost
+spec:
+  storageClassName: do-block-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: staging
+  name: mattermost
+  labels:
+    type: app
+    store: mattermost
+data: 
+  MM_SQLSETTINGS_DRIVERNAME: postgres
+  MM_SQLSETTINGS_DATASOURCE: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable&connect_timeout=10"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: staging
+  name: mattermost
+  labels:
+    type: app
+    store: mattermost
+spec:
+  selector:
+    matchLabels:
+      type: app
+      store: mattermost
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      namespace: staging
+      name: mattermost
+      labels:
+        type: app
+        store: mattermost
+    spec:
+      containers:
+        - image: [image]
+          name: mattermost
+          ports:
+            - containerPort: 8065
+          env:
+            - name: MM_SQLSETTINGS_DRIVERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mattermost
+                  key: MM_SQLSETTINGS_DRIVERNAME
+            - name: MM_SQLSETTINGS_DATASOURCE
+              valueFrom:
+                secretKeyRef:
+                  name: mattermost
+                  key: MM_SQLSETTINGS_DATASOURCE
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 1
+            limits:
+              memory: 1Gi
+              cpu: 1
+          volumeMounts:
+            - name: mattermost-persistent-storage
+              mountPath: /mattermost/server/config
+              subPath: config
+            - name: mattermost-persistent-storage
+              mountPath: /mattermost/server/data
+              subPath: data
+            - name: mattermost-persistent-storage
+              mountPath: /mattermost/server/logs
+              subPath: logs
+            - name: mattermost-persistent-storage
+              mountPath: /mattermost/server/plugins
+              subPath: plugins
+            - name: mattermost-persistent-storage
+              mountPath: /mattermost/server/client/plugins
+              subPath: client/plugins
+      volumes:
+        - name: mattermost-persistent-storage
+          persistentVolumeClaim:
+            claimName: mattermost-pv-claim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: staging
+  name: mattermost
+  labels:
+    type: app
+    store: mattermost
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8065
+  selector:
+    type: app
+    store: mattermost
+  clusterIP: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: staging
+  name: mattermost
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/issuer: letsencrypt-production
+    acme.cert-manager.io/http01-edit-in-place: "true"
+spec:
+  tls:
+    - hosts:
+        - community.altschoolafrica.com
+      secretName: community-altschoolafrica-com-tls
+  rules:
+    - host: community.altschoolafrica.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mattermost
+                port:
+                  number: 80
