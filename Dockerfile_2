@@ -4,7 +4,7 @@ FROM --platform=linux/amd64 ubuntu as build
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Some ENV variables
-ENV PATH="/usr/lib/go/bin:/mattermost/server/bin:${PATH}"
+ENV PATH="/usr/lib/go/bin:/mattermost/bin:${PATH}"
 
 # Build Arguments
 ARG PUID=2000
@@ -40,8 +40,8 @@ RUN make dist
 
 # Build server
 WORKDIR /mattermost/server
-RUN make client \
-    && make build-linux
+RUN make build-linux \
+    && make client
 
 # Healthcheck to make sure container is ready
 HEALTHCHECK --interval=30s --timeout=10s \
@@ -54,4 +54,4 @@ EXPOSE 8065 8067 8074 8075
 VOLUME ["/mattermost/server/data", "/mattermost/server/logs", "/mattermost/server/config", "/mattermost/server/plugins", "/mattermost/server/client/plugins"]
 
 # run the client and server
-CMD ["mattermost"]
+CMD ["sh", "-c", "cd /mattermost/server && make run"]
