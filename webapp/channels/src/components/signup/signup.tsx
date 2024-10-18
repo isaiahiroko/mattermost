@@ -3,43 +3,43 @@
 
 import classNames from 'classnames';
 import throttle from 'lodash/throttle';
-import React, {useState, useEffect, useRef, useCallback} from 'react';
-import type {FocusEvent} from 'react';
-import {useIntl} from 'react-intl';
-import {useSelector, useDispatch} from 'react-redux';
-import {useLocation, useHistory, Route} from 'react-router-dom';
+import type { FocusEvent } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, useHistory, useLocation } from 'react-router-dom';
 
-import type {ServerError} from '@mattermost/types/errors';
-import type {UserProfile} from '@mattermost/types/users';
+import type { ServerError } from '@mattermost/types/errors';
+import type { UserProfile } from '@mattermost/types/users';
 
-import {getTeamInviteInfo} from 'mattermost-redux/actions/teams';
-import {createUser, loadMe} from 'mattermost-redux/actions/users';
-import {Client4} from 'mattermost-redux/client';
-import {getConfig, getLicense, getPasswordConfig} from 'mattermost-redux/selectors/entities/general';
-import {getIsOnboardingFlowEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
-import {isEmail} from 'mattermost-redux/utils/helpers';
+import { getTeamInviteInfo } from 'mattermost-redux/actions/teams';
+import { createUser, loadMe } from 'mattermost-redux/actions/users';
+import { Client4 } from 'mattermost-redux/client';
+import { getConfig, getLicense, getPasswordConfig } from 'mattermost-redux/selectors/entities/general';
+import { getIsOnboardingFlowEnabled } from 'mattermost-redux/selectors/entities/preferences';
+import { getCurrentUserId } from 'mattermost-redux/selectors/entities/users';
+import { isEmail } from 'mattermost-redux/utils/helpers';
 
-import {redirectUserToDefaultTeam} from 'actions/global_actions';
-import {removeGlobalItem, setGlobalItem} from 'actions/storage';
-import {addUserToTeamFromInvite} from 'actions/team_actions';
-import {trackEvent} from 'actions/telemetry_actions.jsx';
-import {loginById} from 'actions/views/login';
-import {getGlobalItem} from 'selectors/storage';
+import { redirectUserToDefaultTeam } from 'actions/global_actions';
+import { removeGlobalItem, setGlobalItem } from 'actions/storage';
+import { addUserToTeamFromInvite } from 'actions/team_actions';
+import { trackEvent } from 'actions/telemetry_actions.jsx';
+import { loginById } from 'actions/views/login';
+import { getGlobalItem } from 'selectors/storage';
 
+import type { AlertBannerProps, ModeType } from 'components/alert_banner';
 import AlertBanner from 'components/alert_banner';
-import type {ModeType, AlertBannerProps} from 'components/alert_banner';
-import useCWSAvailabilityCheck, {CSWAvailabilityCheckTypes} from 'components/common/hooks/useCWSAvailabilityCheck';
+import useCWSAvailabilityCheck, { CSWAvailabilityCheckTypes } from 'components/common/hooks/useCWSAvailabilityCheck';
 import LaptopAlertSVG from 'components/common/svg_images_components/laptop_alert_svg';
 import ManWithLaptopSVG from 'components/common/svg_images_components/man_with_laptop_svg';
 import DesktopAuthToken from 'components/desktop_auth_token';
 import ExternalLink from 'components/external_link';
+import type { ExternalLoginButtonType } from 'components/external_login_button/external_login_button';
 import ExternalLoginButton from 'components/external_login_button/external_login_button';
-import type {ExternalLoginButtonType} from 'components/external_login_button/external_login_button';
 import FormattedMarkdownMessage from 'components/formatted_markdown_message';
 import AlternateLinkLayout from 'components/header_footer_route/content_layouts/alternate_link';
 import ColumnLayout from 'components/header_footer_route/content_layouts/column';
-import type {CustomizeHeaderType} from 'components/header_footer_route/header_footer_route';
+import type { CustomizeHeaderType } from 'components/header_footer_route/header_footer_route';
 import LoadingScreen from 'components/loading_screen';
 import Markdown from 'components/markdown';
 import SaveButton from 'components/save_button';
@@ -49,16 +49,16 @@ import LoginGitlabIcon from 'components/widgets/icons/login_gitlab_icon';
 import LoginGoogleIcon from 'components/widgets/icons/login_google_icon';
 import LoginOpenIDIcon from 'components/widgets/icons/login_openid_icon';
 import CheckInput from 'components/widgets/inputs/check';
-import Input, {SIZE} from 'components/widgets/inputs/input/input';
-import type {CustomMessageInputType} from 'components/widgets/inputs/input/input';
+import type { CustomMessageInputType } from 'components/widgets/inputs/input/input';
+import Input, { SIZE } from 'components/widgets/inputs/input/input';
 import PasswordInput from 'components/widgets/inputs/password_input/password_input';
 
-import {Constants, HostedCustomerLinks, ItemStatus, ValidationErrors} from 'utils/constants';
-import {isValidPassword} from 'utils/password';
-import {isDesktopApp} from 'utils/user_agent';
-import {isValidUsername, getRoleFromTrackFlow, getMediumFromTrackFlow} from 'utils/utils';
+import { Constants, HostedCustomerLinks, ItemStatus, ValidationErrors } from 'utils/constants';
+import { isValidPassword } from 'utils/password';
+import { isDesktopApp } from 'utils/user_agent';
+import { getMediumFromTrackFlow, getRoleFromTrackFlow, isValidUsername } from 'utils/utils';
 
-import type {GlobalState} from 'types/store';
+import type { GlobalState } from 'types/store';
 
 import './signup.scss';
 
@@ -178,7 +178,7 @@ const Signup = ({onCustomizeHeader}: SignupProps) => {
                 id: 'gitlab',
                 url,
                 icon: <LoginGitlabIcon/>,
-                label: GitLabButtonText || formatMessage({id: 'login.gitlab', defaultMessage: 'GitLab'}),
+                label: '',
                 style: {color: GitLabButtonColor, borderColor: GitLabButtonColor},
                 onClick: desktopExternalAuth(url),
             });

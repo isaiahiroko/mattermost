@@ -3,39 +3,39 @@
 
 import classNames from 'classnames';
 import throttle from 'lodash/throttle';
-import React, {useState, useEffect, useRef, useCallback} from 'react';
-import type {FormEvent} from 'react';
-import {useIntl} from 'react-intl';
-import {useSelector, useDispatch} from 'react-redux';
-import {Link, useLocation, useHistory, Route} from 'react-router-dom';
+import type { FormEvent } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Route, useHistory, useLocation } from 'react-router-dom';
 
-import type {Team} from '@mattermost/types/teams';
+import type { Team } from '@mattermost/types/teams';
 
-import {loadMe} from 'mattermost-redux/actions/users';
-import {Client4} from 'mattermost-redux/client';
-import {RequestStatus} from 'mattermost-redux/constants';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getIsOnboardingFlowEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getTeamByName, getMyTeamMember} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+import { loadMe } from 'mattermost-redux/actions/users';
+import { Client4 } from 'mattermost-redux/client';
+import { RequestStatus } from 'mattermost-redux/constants';
+import { getConfig, getLicense } from 'mattermost-redux/selectors/entities/general';
+import { getIsOnboardingFlowEnabled } from 'mattermost-redux/selectors/entities/preferences';
+import { getMyTeamMember, getTeamByName } from 'mattermost-redux/selectors/entities/teams';
+import { getCurrentUser } from 'mattermost-redux/selectors/entities/users';
 
-import {redirectUserToDefaultTeam} from 'actions/global_actions';
-import {addUserToTeamFromInvite} from 'actions/team_actions';
-import {trackEvent} from 'actions/telemetry_actions';
-import {login} from 'actions/views/login';
+import { redirectUserToDefaultTeam } from 'actions/global_actions';
+import { addUserToTeamFromInvite } from 'actions/team_actions';
+import { trackEvent } from 'actions/telemetry_actions';
+import { login } from 'actions/views/login';
 import LocalStorageStore from 'stores/local_storage_store';
 
+import type { AlertBannerProps, ModeType } from 'components/alert_banner';
 import AlertBanner from 'components/alert_banner';
-import type {ModeType, AlertBannerProps} from 'components/alert_banner';
-import type {SubmitOptions} from 'components/claim/components/email_to_ldap';
+import type { SubmitOptions } from 'components/claim/components/email_to_ldap';
 import WomanWithChatsSVG from 'components/common/svg_images_components/woman_with_chats_svg';
 import DesktopAuthToken from 'components/desktop_auth_token';
 import ExternalLink from 'components/external_link';
+import type { ExternalLoginButtonType } from 'components/external_login_button/external_login_button';
 import ExternalLoginButton from 'components/external_login_button/external_login_button';
-import type {ExternalLoginButtonType} from 'components/external_login_button/external_login_button';
 import AlternateLinkLayout from 'components/header_footer_route/content_layouts/alternate_link';
 import ColumnLayout from 'components/header_footer_route/content_layouts/column';
-import type {CustomizeHeaderType} from 'components/header_footer_route/header_footer_route';
+import type { CustomizeHeaderType } from 'components/header_footer_route/header_footer_route';
 import LoadingScreen from 'components/loading_screen';
 import Markdown from 'components/markdown';
 import SaveButton from 'components/save_button';
@@ -44,17 +44,17 @@ import LockIcon from 'components/widgets/icons/lock_icon';
 import LoginGitlabIcon from 'components/widgets/icons/login_gitlab_icon';
 import LoginGoogleIcon from 'components/widgets/icons/login_google_icon';
 import LoginOpenIDIcon from 'components/widgets/icons/login_openid_icon';
-import Input, {SIZE} from 'components/widgets/inputs/input/input';
+import Input, { SIZE } from 'components/widgets/inputs/input/input';
 import PasswordInput from 'components/widgets/inputs/password_input/password_input';
 
 import Constants from 'utils/constants';
 import DesktopApp from 'utils/desktop_api';
-import {t} from 'utils/i18n';
-import {showNotification} from 'utils/notifications';
-import {isDesktopApp} from 'utils/user_agent';
-import {setCSRFFromCookie} from 'utils/utils';
+import { t } from 'utils/i18n';
+import { showNotification } from 'utils/notifications';
+import { isDesktopApp } from 'utils/user_agent';
+import { setCSRFFromCookie } from 'utils/utils';
 
-import type {GlobalState} from 'types/store';
+import type { GlobalState } from 'types/store';
 
 import LoginMfa from './login_mfa';
 
@@ -163,7 +163,7 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
                 id: 'gitlab',
                 url,
                 icon: <LoginGitlabIcon/>,
-                label: GitLabButtonText || formatMessage({id: 'login.gitlab', defaultMessage: 'GitLab'}),
+                label: '',
                 style: {color: GitLabButtonColor, borderColor: GitLabButtonColor},
                 onClick: desktopExternalAuth(url),
             });
