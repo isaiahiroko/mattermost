@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ubuntu as build
+FROM ubuntu as build
 
 # Setting bash as our shell, and enabling pipefail option
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
