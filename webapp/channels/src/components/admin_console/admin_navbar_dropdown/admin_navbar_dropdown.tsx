@@ -2,20 +2,19 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {injectIntl} from 'react-intl';
-import type {IntlShape} from 'react-intl';
+import type { IntlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
-import type {Team} from '@mattermost/types/teams';
+import type { Team } from '@mattermost/types/teams';
 
 import * as GlobalActions from 'actions/global_actions';
-import {trackEvent} from 'actions/telemetry_actions.jsx';
+import { trackEvent } from 'actions/telemetry_actions.jsx';
 
-import AboutBuildModal from 'components/about_build_modal';
 import CommercialSupportModal from 'components/commercial_support_modal';
 import Menu from 'components/widgets/menu/menu';
 
-import {ModalIdentifiers} from 'utils/constants';
-import {filterAndSortTeamsByDisplayName} from 'utils/team_utils';
+import { ModalIdentifiers } from 'utils/constants';
+import { filterAndSortTeamsByDisplayName } from 'utils/team_utils';
 
 import MenuItemBlockableLink from './menu_item_blockable_link';
 
@@ -118,12 +117,6 @@ class AdminNavbarDropdown extends React.PureComponent<Props> {
                         text={formatMessage({id: 'admin.nav.troubleshootingForum', defaultMessage: 'Troubleshooting Forum'})}
                     />
                     {commercialSupport}
-                    <Menu.ItemToggleModalRedux
-                        onClick={() => trackEvent('admin', 'click_administrators_about')}
-                        modalId={ModalIdentifiers.ABOUT}
-                        dialogType={AboutBuildModal}
-                        text={formatMessage({id: 'navbar_dropdown.about', defaultMessage: 'About {appTitle}'}, {appTitle: siteName || 'Mattermost'})}
-                    />
                 </Menu.Group>
                 <Menu.Group>
                     <Menu.ItemAction

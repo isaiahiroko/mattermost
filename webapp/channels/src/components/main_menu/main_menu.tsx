@@ -2,17 +2,16 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {injectIntl} from 'react-intl';
-import type {IntlShape} from 'react-intl';
+import type { IntlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type { UserProfile } from '@mattermost/types/users';
 
-import {Permissions} from 'mattermost-redux/constants';
+import { Permissions } from 'mattermost-redux/constants';
 
 import * as GlobalActions from 'actions/global_actions';
-import {trackEvent} from 'actions/telemetry_actions';
+import { trackEvent } from 'actions/telemetry_actions';
 
-import AboutBuildModal from 'components/about_build_modal';
 import AddGroupsToTeamModal from 'components/add_groups_to_team_modal';
 import InvitationModal from 'components/invitation_modal';
 import LeaveTeamModal from 'components/leave_team_modal';
@@ -26,14 +25,14 @@ import LeaveTeamIcon from 'components/widgets/icons/leave_team_icon';
 import Menu from 'components/widgets/menu/menu';
 import RestrictedIndicator from 'components/widgets/menu/menu_items/restricted_indicator';
 
-import {FREEMIUM_TO_ENTERPRISE_TRIAL_LENGTH_DAYS} from 'utils/cloud_utils';
-import {Constants, LicenseSkus, ModalIdentifiers, MattermostFeatures} from 'utils/constants';
-import {cmdOrCtrlPressed, isKeyPressed} from 'utils/keyboard';
-import {makeUrlSafe} from 'utils/url';
+import { FREEMIUM_TO_ENTERPRISE_TRIAL_LENGTH_DAYS } from 'utils/cloud_utils';
+import { Constants, LicenseSkus, MattermostFeatures, ModalIdentifiers } from 'utils/constants';
+import { cmdOrCtrlPressed, isKeyPressed } from 'utils/keyboard';
+import { makeUrlSafe } from 'utils/url';
 import * as UserAgent from 'utils/user_agent';
 
-import type {ModalData} from 'types/actions';
-import type {PluginComponent} from 'types/store/plugins';
+import type { ModalData } from 'types/actions';
+import type { PluginComponent } from 'types/store/plugins';
 
 import LearnAboutTeamsLink from './learn_about_teams_link';
 import './main_menu.scss';
@@ -189,15 +188,6 @@ export class MainMenu extends React.PureComponent<Props> {
                     >
                         <Menu.CloudTrial
                             id='menuCloudTrial'
-                        />
-                    </SystemPermissionGate>
-                </Menu.Group>
-                <Menu.Group>
-                    <SystemPermissionGate
-                        permissions={[Permissions.SYSCONSOLE_WRITE_ABOUT_EDITION_AND_LICENSE]}
-                    >
-                        <Menu.StartTrial
-                            id='startTrial'
                         />
                     </SystemPermissionGate>
                 </Menu.Group>
@@ -367,13 +357,6 @@ export class MainMenu extends React.PureComponent<Props> {
                         url={safeAppDownloadLink}
                         text={formatMessage({id: 'navbar_dropdown.nativeApps', defaultMessage: 'Download Apps'})}
                         icon={<i className='fa fa-mobile'/>}
-                    />
-                    <Menu.ItemToggleModalRedux
-                        id='about'
-                        modalId={ModalIdentifiers.ABOUT}
-                        dialogType={AboutBuildModal}
-                        text={formatMessage({id: 'navbar_dropdown.about', defaultMessage: 'About {appTitle}'}, {appTitle: this.props.siteName || 'Mattermost'})}
-                        icon={<i className='fa fa-info'/>}
                     />
                 </Menu.Group>
                 <Menu.Group>

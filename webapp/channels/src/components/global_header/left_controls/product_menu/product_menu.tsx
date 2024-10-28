@@ -1,17 +1,17 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, {useRef} from 'react';
-import {useIntl} from 'react-intl';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useRef } from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import IconButton from '@mattermost/compass-components/components/icon-button'; // eslint-disable-line no-restricted-imports
 
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
+import { getLicense } from 'mattermost-redux/selectors/entities/general';
 
-import {setProductMenuSwitcherOpen} from 'actions/views/product_menu';
-import {isSwitcherOpen} from 'selectors/views/product_menu';
+import { setProductMenuSwitcherOpen } from 'actions/views/product_menu';
+import { isSwitcherOpen } from 'selectors/views/product_menu';
 
 import {
     OnboardingTaskCategory,
@@ -22,14 +22,14 @@ import {
 import Menu from 'components/widgets/menu/menu';
 import MenuWrapper from 'components/widgets/menu/menu_wrapper';
 
-import {useCurrentProductId, useProducts, isChannels} from 'utils/products';
+import { isChannels, useCurrentProductId, useProducts } from 'utils/products';
 
 import ProductBranding from './product_branding';
 import ProductBrandingTeamEdition from './product_branding_team_edition';
 import ProductMenuItem from './product_menu_item';
 import ProductMenuList from './product_menu_list';
 
-import {useClickOutsideRef} from '../../hooks';
+import { useClickOutsideRef } from '../../hooks';
 
 export const ProductMenuContainer = styled.nav`
     display: flex;
@@ -137,11 +137,6 @@ const ProductMenu = (): JSX.Element => {
                         onClick={handleClick}
                         handleVisitConsoleClick={handleVisitConsoleClick}
                     />
-                    <Menu.Group>
-                        <Menu.StartTrial
-                            id='startTrial'
-                        />
-                    </Menu.Group>
                 </Menu>
             </MenuWrapper>
         </div>

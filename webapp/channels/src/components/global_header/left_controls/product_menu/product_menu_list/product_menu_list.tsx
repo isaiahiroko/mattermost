@@ -1,23 +1,21 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, {useEffect} from 'react';
-import {useIntl} from 'react-intl';
+import React, { useEffect } from 'react';
+import { useIntl } from 'react-intl';
 
 import {
     AccountMultipleOutlineIcon,
     ApplicationCogIcon,
     DownloadOutlineIcon,
-    InformationOutlineIcon,
     ViewGridPlusOutlineIcon,
-    WebhookIncomingIcon,
+    WebhookIncomingIcon
 } from '@mattermost/compass-icons/components';
-import type {UserProfile} from '@mattermost/types/users';
+import type { UserProfile } from '@mattermost/types/users';
 
-import {Permissions} from 'mattermost-redux/constants';
+import { Permissions } from 'mattermost-redux/constants';
 
-import AboutBuildModal from 'components/about_build_modal';
-import {VisitSystemConsoleTour} from 'components/onboarding_tasks';
+import { VisitSystemConsoleTour } from 'components/onboarding_tasks';
 import SystemPermissionGate from 'components/permissions_gates/system_permission_gate';
 import TeamPermissionGate from 'components/permissions_gates/team_permission_gate';
 import MarketplaceModal from 'components/plugin_marketplace/marketplace_modal';
@@ -25,12 +23,11 @@ import UserGroupsModal from 'components/user_groups_modal';
 import Menu from 'components/widgets/menu/menu';
 import RestrictedIndicator from 'components/widgets/menu/menu_items/restricted_indicator';
 
-import {FREEMIUM_TO_ENTERPRISE_TRIAL_LENGTH_DAYS} from 'utils/cloud_utils';
-import {LicenseSkus, ModalIdentifiers, MattermostFeatures} from 'utils/constants';
-import {makeUrlSafe} from 'utils/url';
+import type { ModalData } from 'types/actions';
+import { FREEMIUM_TO_ENTERPRISE_TRIAL_LENGTH_DAYS } from 'utils/cloud_utils';
+import { LicenseSkus, MattermostFeatures, ModalIdentifiers } from 'utils/constants';
+import { makeUrlSafe } from 'utils/url';
 import * as UserAgent from 'utils/user_agent';
-
-import type {ModalData} from 'types/actions';
 
 import './product_menu_list.scss';
 
@@ -211,13 +208,6 @@ const ProductMenuList = (props: Props): JSX.Element | null => {
                     url={makeUrlSafe(appDownloadLink)}
                     text={formatMessage({id: 'navbar_dropdown.nativeApps', defaultMessage: 'Download Apps'})}
                     icon={<DownloadOutlineIcon size={18}/>}
-                />
-                <Menu.ItemToggleModalRedux
-                    id='about'
-                    modalId={ModalIdentifiers.ABOUT}
-                    dialogType={AboutBuildModal}
-                    text={formatMessage({id: 'navbar_dropdown.about', defaultMessage: 'About {appTitle}'}, {appTitle: siteName})}
-                    icon={<InformationOutlineIcon size={18}/>}
                 />
             </div>
         </Menu.Group>

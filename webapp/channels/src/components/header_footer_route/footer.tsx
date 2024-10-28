@@ -2,13 +2,13 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {useIntl} from 'react-intl';
-import {useSelector} from 'react-redux';
+import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
 
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import { getConfig } from 'mattermost-redux/selectors/entities/general';
 
-import './footer.scss';
 import ExternalLink from 'components/external_link';
+import './footer.scss';
 
 const Footer = () => {
     const {formatMessage} = useIntl();
@@ -21,7 +21,7 @@ const Footer = () => {
                 key='footer-copyright'
                 className='footer-copyright'
             >
-                {`© ${new Date().getFullYear()} Mattermost Inc.`}
+                {`© ${new Date().getFullYear()} AltSchool.`}
             </span>
             {AboutLink && (
                 <ExternalLink

@@ -3,10 +3,10 @@
 
 import classNames from 'classnames';
 import React from 'react';
-import {useSelector} from 'react-redux';
-import {Link} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
+import { getConfig, getLicense } from 'mattermost-redux/selectors/entities/general';
 
 import BackButton from 'components/common/back_button';
 import Logo from 'components/common/svg_images_components/logo_dark_blue_svg';
@@ -27,7 +27,7 @@ const Header = ({alternateLink, backButtonURL, onBackButtonClick}: HeaderProps) 
 
     let freeBanner = null;
     if (license.IsLicensed === 'false') {
-        freeBanner = <><Logo/><span className='freeBadge'>{'FREE EDITION'}</span></>;
+        freeBanner = <><Logo/></>;
     }
 
     let title: React.ReactNode = SiteName;
