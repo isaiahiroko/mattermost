@@ -95,3 +95,10 @@ See the [LICENSE file](LICENSE.txt) for license rights and limitations.
 
 Please see [CONTRIBUTING.md](./CONTRIBUTING.md).
 [Join the Mattermost Contributors server](https://community.mattermost.com/signup_user_complete/?id=codoy5s743rq5mk18i7u5ksz7e) to join community discussions about contributions, development, and more.
+
+## Buidl
+```bash
+$ docker build --platform=linux/amd64 -t isaiahiroko/mattermost:0.0.0 .
+$ docker run --name isaiahiroko-mattermos -d -p 8065:8065 isaiahiroko/mattermost:0.0.0
+$ docker push isaiahiroko/mattermost:0.0.0
+```

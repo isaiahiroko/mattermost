@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ubuntu as build
+FROM ubuntu
 
 # Setting bash as our shell, and enabling pipefail option
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -40,7 +40,8 @@ RUN make dist
 
 # Build server
 WORKDIR /mattermost/server
-RUN make client \
+RUN make setup-go-work \
+    && make client \
     && make build-linux
 
 # Healthcheck to make sure container is ready
