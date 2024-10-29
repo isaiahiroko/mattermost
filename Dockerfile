@@ -35,8 +35,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
 # Build client
 RUN mkdir /mattermost
 COPY . /mattermost
-WORKDIR /mattermost/webapp
-RUN make dist
+# WORKDIR /mattermost/webapp
+# RUN make dist
 
 # Build server
 WORKDIR /mattermost/server

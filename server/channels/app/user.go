@@ -364,11 +364,12 @@ func (a *App) CreateOAuthUser(c request.CTX, service string, userData io.Reader,
 		return userByAuth, nil
 	}
 
+	// Allow email with different provider to login
 	userByEmail, _ := a.ch.srv.userService.GetUserByEmail(user.Email)
 	if userByEmail != nil {
-		if userByEmail.AuthService == "" {
-			return nil, model.NewAppError("CreateOAuthUser", "api.user.create_oauth_user.already_attached.app_error", map[string]any{"Service": service, "Auth": model.UserAuthServiceEmail}, "email="+user.Email, http.StatusBadRequest)
-		}
+		// if userByEmail.AuthService == "" {
+		// 	return nil, model.NewAppError("CreateOAuthUser", "api.user.create_oauth_user.already_attached.app_error", map[string]any{"Service": service, "Auth": model.UserAuthServiceEmail}, "email="+user.Email, http.StatusBadRequest)
+		// }
 		if provider.IsSameUser(c, userByEmail, user) {
 			if _, err := a.Srv().Store().User().UpdateAuthData(userByEmail.Id, user.AuthService, user.AuthData, "", false); err != nil {
 				// if the user is not updated, write a warning to the log, but don't prevent user login
@@ -376,7 +377,7 @@ func (a *App) CreateOAuthUser(c request.CTX, service string, userData io.Reader,
 			}
 			return userByEmail, nil
 		}
-		return nil, model.NewAppError("CreateOAuthUser", "api.user.create_oauth_user.already_attached.app_error", map[string]any{"Service": service, "Auth": userByEmail.AuthService}, "email="+user.Email+" authData="+*user.AuthData, http.StatusBadRequest)
+		// return nil, model.NewAppError("CreateOAuthUser", "api.user.create_oauth_user.already_attached.app_error", map[string]any{"Service": service, "Auth": userByEmail.AuthService}, "email="+user.Email+" authData="+*user.AuthData, http.StatusBadRequest)
 	}
 
 	user.EmailVerified = true
