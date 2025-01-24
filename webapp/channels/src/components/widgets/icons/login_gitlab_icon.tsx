@@ -5,7 +5,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 
 export default function LoginGitlabIcon(props: React.HTMLAttributes<HTMLSpanElement>) {
-    const {formatMessage} = useIntl();
+    const { formatMessage } = useIntl();
 
     return (
         <span {...props}>
@@ -14,7 +14,7 @@ export default function LoginGitlabIcon(props: React.HTMLAttributes<HTMLSpanElem
                 height='auto'
                 viewBox='0 0 80 80'
                 fill='none'
-                color='000812'
+                color='white'
                 xmlns='http://www.w3.org/2000/svg'
                 aria-label='Login with Altschool'
             >

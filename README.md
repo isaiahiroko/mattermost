@@ -111,7 +111,7 @@ $ make run
 ## Build
 
 ```bash
-$ docker build --platform=linux/amd64 -t isaiahiroko/mattermost:0.0.2 .
-$ docker run --name isaiahiroko-mattermost -d -p 8065:8065 isaiahiroko/mattermost:0.0.2
-$ docker push isaiahiroko/mattermost:0.0.2
+$ docker build --platform=linux/amd64 -t isaiahiroko/mattermost:0.0.3 .
+$ docker run --name isaiahiroko-mattermost -d -p 8065:8065 isaiahiroko/mattermost:0.0.3
+$ docker push isaiahiroko/mattermost:0.0.3
 ```

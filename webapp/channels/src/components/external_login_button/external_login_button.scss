@@ -4,7 +4,7 @@
 @import 'utils/mixins';
 
 .external-login-button {
-    @include secondary-button;
+    @include primary-button;
     @include button-medium;
 
     min-width: 136px;
