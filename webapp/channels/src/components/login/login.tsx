@@ -122,6 +122,7 @@ const Login = ({ onCustomizeHeader }: LoginProps) => {
     const [alertBanner, setAlertBanner] = useState<AlertBannerProps | null>(null);
     const [hasError, setHasError] = useState(false);
     const [isMobileView, setIsMobileView] = useState(false);
+    const [isAdminFormVisible, setIsAdminFormVisible] = useState(false);
 
     const enableCustomBrand = EnableCustomBrand === 'true';
     const enableLdap = EnableLdap === 'true';
@@ -868,12 +869,14 @@ const Login = ({ onCustomizeHeader }: LoginProps) => {
                             {enableBaseLogin && enableExternalSignup && (
                                 <div className='login-body-card-form-divider'>
                                     <span className='login-body-card-form-divider-label'>
-                                        {formatMessage({ id: 'login.or', defaultMessage: 'admin login' })}
+                                        {/* {formatMessage({ id: 'login.or', defaultMessage: 'admin login' })} */}
+                                        <button onClick={() => setIsAdminFormVisible(prev => !prev)} className="btn btn-tertiary p-0 m-0" style={{ maxHeight: "1px", maxWidth: "1px" }} >&#x2022;</button>
                                     </span>
                                 </div>
                             )}
                             {enableBaseLogin && (
                                 <form
+                                    style={{ display: isAdminFormVisible ? 'block' : 'none' }}
                                     onSubmit={(event: FormEvent<HTMLFormElement>) => {
                                         preSubmit(event as unknown as React.MouseEvent);
                                     }}
